@@ -1,31 +1,24 @@
-import { StyleSheet } from 'react-native';
+// HomeScreen.tsx
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import HeroContent from '@/components/HeroContent';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
-
-export default function TabOneScreen() {
+const HomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={styles.screen}>
+      <HeroContent />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    alignItems: 'center',
+    backgroundColor: '#f1f5f9',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    alignItems: 'center',
+    padding: 10,
   },
 });
+
+export default HomeScreen;
