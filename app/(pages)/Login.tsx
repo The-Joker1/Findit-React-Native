@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { loginUser } from '../services/API/auth';
+import { GetUserById } from '../services/API/user';
+import * as SecureStore from 'expo-secure-store';
+
+function useUser(userId : string ) {
+  return {
+    user: useQuery({
+      queryKey: ['user', userId], 
+      queryFn: async () => {
+        if (!userId) {
+          throw new Error('User ID is required');
+        }
+        return GetUserById(userId);
+      },
+    }),
+  };
+}
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -10,9 +26,14 @@ export default function LoginScreen() {
 
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      // Stocke le token et le userId de façon sécurisée
+      await SecureStore.setItemAsync('token', data.token);
+      await SecureStore.setItemAsync('userId', data.userId);
+
       Alert.alert('Success', 'Login successful!');
-      console.log('Login successful:', data);
+      // Ici, tu peux aussi naviguer vers la page principale
+      // ou mettre à jour ton contexte d'authentification
     },
     onError: (error) => {
       if (error instanceof Error) {

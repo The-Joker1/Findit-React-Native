@@ -3,9 +3,9 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react'
 import 'react-native-reanimated';
-
+import * as SecureStore from 'expo-secure-store';
 import { useColorScheme } from '@/components/useColorScheme';
 
 import {
@@ -13,6 +13,7 @@ import {
   QueryClientProvider,
   useQuery,
 } from '@tanstack/react-query'
+import { AppContextProvider } from '@/components/AppContext';
 
 const queryClient = new QueryClient()
 
@@ -57,6 +58,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
+    //<AppContextProvider>
     <QueryClientProvider client={queryClient}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -65,5 +67,8 @@ function RootLayoutNav() {
       </Stack>
     </ThemeProvider>
     </QueryClientProvider>
+    //</AppContextProvider>
   );
 }
+
+

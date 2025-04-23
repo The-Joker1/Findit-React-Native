@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { useRouter } from 'expo-router';  // Importer useRouter
 
 const TrustBadge = ({ icon, text }: { icon: string; text: string }) => (
   <View style={styles.badge}>
@@ -8,6 +9,18 @@ const TrustBadge = ({ icon, text }: { icon: string; text: string }) => (
 );
 
 const HeroContent = () => {
+  const router = useRouter(); // Initialiser useRouter
+
+  // Fonction pour naviguer vers la page Search
+  const navigateToSearch = () => {
+    router.push('/(pages)/Search'); // Naviguer vers la page Search.tsx
+  };
+
+  // Fonction pour naviguer vers la page Login
+  const navigateToLogin = () => {
+    router.push('/(pages)/Login'); // Naviguer vers la page Login.tsx
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.heroBox}>
@@ -18,8 +31,14 @@ const HeroContent = () => {
           real-time price drop alerts. Start shopping smarter today!
         </Text>
 
-        <TouchableOpacity style={styles.button}>
+        {/* Bouton Explore Deals */}
+        <TouchableOpacity style={styles.button} onPress={navigateToSearch}>
           <Text style={styles.buttonText}>🔍 Explore Deals Now</Text>
+        </TouchableOpacity>
+
+        {/* Nouveau bouton Login */}
+        <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={navigateToLogin}>
+          <Text style={styles.buttonText}>🔑 Login</Text>
         </TouchableOpacity>
 
         <View style={styles.badgeContainer}>
@@ -46,7 +65,7 @@ const HeroContent = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    padding: 20,
+    padding: 15,
     backgroundColor: '#f9fafb',
   },
   heroBox: {
@@ -61,14 +80,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 36,
+    fontSize: 28,  // Réduit la taille de la police
     color: '#2563eb',
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 22,
+    fontSize: 18,  // Réduit la taille de la police
     color: '#1f2937',
     fontWeight: '600',
     textAlign: 'center',
@@ -78,17 +97,22 @@ const styles = StyleSheet.create({
     color: '#4b5563',
     textAlign: 'center',
     marginBottom: 20,
+    fontSize: 14,  // Taille de texte plus petite pour une meilleure lisibilité sur mobile
   },
   button: {
     backgroundColor: '#2563eb',
-    padding: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     borderRadius: 999,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15, // Réduit l'espace entre les boutons
+  },
+  loginButton: {
+    marginBottom: 20,  // Réduit l'espace entre le bouton "Login" et le reste du contenu
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,  // Réduit la taille du texte sur les boutons
     fontWeight: '600',
   },
   badgeContainer: {
@@ -100,12 +124,12 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: '#e0f2fe',
-    padding: 10,
+    padding: 8,
     borderRadius: 12,
     margin: 5,
   },
   badgeText: {
-    fontSize: 14,
+    fontSize: 12,  // Réduit la taille du texte dans les badges
     color: '#1e3a8a',
   },
   testimonial: {
@@ -116,6 +140,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     textAlign: 'center',
+    fontSize: 14,  // Ajuste la taille du texte pour qu'il soit plus lisible
   },
   partnerLogos: {
     flexDirection: 'row',
@@ -126,8 +151,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    height: 32,
-    width: 80,
+    height: 28,  // Ajuste la taille des logos pour les petits écrans
+    width: 70,  // Ajuste la largeur des logos
     resizeMode: 'contain',
   },
 });

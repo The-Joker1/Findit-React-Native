@@ -17,7 +17,7 @@ const HomeScreen = () => {
   const router = useRouter();
   
   const navigateToSearch = () => {
-    router.push('/(tabs)/Search');
+    router.push('/(pages)/Search');
   };
 
   const navigateToLogin = () => {

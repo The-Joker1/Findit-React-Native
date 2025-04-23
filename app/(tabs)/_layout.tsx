@@ -24,13 +24,15 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        // headerShown: useClientOnlyValue(false, true),
+        headerShown: true, // Afficher la barre de titre
+        headerTitleAlign: 'center', // Centrer le titre
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'HomeScreen',
-          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -47,14 +49,14 @@ export default function TabLayout() {
           ),
         }}
       />
-
       <Tabs.Screen
-        name="two"
+        name="Search"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="code" color={color} />,
+          title: 'Search',
+          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="search" color={color} />,
         }}
       />
+
     </Tabs>
   );
 }
