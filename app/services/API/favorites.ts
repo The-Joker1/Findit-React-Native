@@ -1,4 +1,4 @@
-async function DeleteFavorite(userId: string, productId: string) {
+export async function DeleteFavorite(userId: string, productId: string) {
   const response = await fetch("http://192.168.0.6:5173/myfavorites", {
     method: "DELETE",
     body: JSON.stringify({ userId, productId }),
