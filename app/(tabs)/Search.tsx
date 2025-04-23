@@ -41,7 +41,6 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    marginTop: 40,
     flex: 1,
     backgroundColor: '#f7fafc',
   },

@@ -13,7 +13,7 @@ const HeroContent = () => {
 
   // Fonction pour naviguer vers la page Search
   const navigateToSearch = () => {
-    router.push('/(pages)/Search'); // Naviguer vers la page Search.tsx
+    router.push('/(tabs)/Search'); // Naviguer vers la page Search.tsx
   };
 
   // Fonction pour naviguer vers la page Login

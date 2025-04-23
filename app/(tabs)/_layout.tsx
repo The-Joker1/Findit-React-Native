@@ -56,7 +56,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="search" color={color} />,
         }}
       />
-
+       <Tabs.Screen
+        name="myfavorites"
+        options={{
+          title: 'favorites',
+          tabBarIcon: ({ color }: { color: string }) => <TabBarIcon name="heart" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

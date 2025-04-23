@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   thumbnail: {
-    width: '100%',
-    height: 200,
+    width: '90%',
+    height: 140,
     borderRadius: 8,
     marginBottom: 12,
   },

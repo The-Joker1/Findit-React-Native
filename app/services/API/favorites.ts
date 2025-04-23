@@ -14,7 +14,7 @@ async function DeleteFavorite(userId: string, productId: string) {
 }
 
 
-async function GetUserFavorites(userId: string) {
+export async function GetUserFavorites(userId: string) {
   const url = new URL("http://192.168.0.6:5173/myfavorites");
   url.searchParams.append("userId", userId);
 
