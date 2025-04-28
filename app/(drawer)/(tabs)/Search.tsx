@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import SearchBar from '../../components/SearchBar';
-import { SearchQuery } from '../services/API/search';
-import ResultsGrid from '../../components/ResultsGrid';
+import SearchBar from '../../../components/SearchBar';
+import { SearchQuery } from '../../services/API/search';
+import ResultsGrid from '../../../components/ResultsGrid';
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');

@@ -17,7 +17,7 @@ const HomeScreen = () => {
   const router = useRouter();
   
   const navigateToSearch = () => {
-    router.push('/(tabs)/Search');
+    router.push('/Search');
   };
 
   const navigateToLogin = () => {
@@ -70,9 +70,9 @@ const HomeScreen = () => {
 
         {/* Partner Logos */}
         <View style={styles.partnerSection}>
-          <Image source={require('../../assets/images/amazon-logo.png')} style={styles.logo} />
-          <Image source={require('../../assets/images/ebay-logo.jpg')} style={styles.logo} />
-          <Image source={require('../../assets/images/walmart-logo.png')} style={styles.logo} />
+          <Image source={require('../../../assets/images/amazon-logo.png')} style={styles.logo} />
+          <Image source={require('../../../assets/images/ebay-logo.jpg')} style={styles.logo} />
+          <Image source={require('../../../assets/images/walmart-logo.png')} style={styles.logo} />
           <Text style={styles.morePartners}>and many more...</Text>
         </View>
       </ScrollView>

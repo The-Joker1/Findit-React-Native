@@ -1,8 +1,8 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
+import { Link, Tabs, useNavigation } from 'expo-router';
 import { Pressable } from 'react-native';
-
+import { DrawerActions } from '@react-navigation/native';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -17,17 +17,27 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const navigation = useNavigation();
+  const openDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        // headerShown: useClientOnlyValue(false, true),
-        headerShown: true, // Afficher la barre de titre
-        headerTitleAlign: 'center', // Centrer le titre
-      }}>
+    screenOptions={{
+      tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+      headerShown: true,
+      headerTitleAlign: 'center',
+      headerLeft: () => (
+        <Pressable onPress={openDrawer} style={{ marginLeft: 15 }}>
+          <FontAwesome
+            name="bars"
+            size={25}
+            color={Colors[colorScheme ?? 'light'].text}
+          />
+        </Pressable>
+      ),
+    }}>
       <Tabs.Screen
         name="index"
         options={{

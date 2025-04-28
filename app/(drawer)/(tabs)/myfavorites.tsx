@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, FlatList, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import FavoriteItemCard from '../../components/favorites';
-import { GetUserFavorites} from '../services/API/favorites';
+import FavoriteItemCard from '../../../components/favorites';
+import { GetUserFavorites} from '../../services/API/favorites';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 export default function FavoritesScreen() {
