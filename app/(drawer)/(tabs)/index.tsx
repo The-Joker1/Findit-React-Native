@@ -20,9 +20,9 @@ const HomeScreen = () => {
     router.push('/Search');
   };
 
-  const navigateToLogin = () => {
-    router.push('/(pages)/Login');
-  };
+  // const navigateToLogin = () => {
+  //   router.push('/(pages)/Login');
+  // };
 
   const TrustBadge = ({ icon, text }: { icon: string; text: string }) => (
     <View style={styles.badge}>
@@ -43,11 +43,11 @@ const HomeScreen = () => {
         {/* CTA Buttons */}
         <View style={styles.actions}>
           <TouchableOpacity style={styles.button} onPress={navigateToSearch}>
-            <Text style={styles.buttonText}>🔍 Explore Deals</Text>
+            <Text style={styles.buttonText}>🔍 Explore Deals NOW </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={navigateToLogin}>
+          {/* <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={navigateToLogin}>
             <Text style={styles.buttonText}>🔑 Login</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* Description */}

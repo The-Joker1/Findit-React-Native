@@ -4,7 +4,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import Colors from '@/constants/Colors';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-
 function CustomDrawerContent(props : any ) {
   const colorScheme = useColorScheme();
   
@@ -46,13 +45,14 @@ export default function DrawerLayout() {
 
   return (
     <Drawer
-      drawerContent={(props : any ) => <CustomDrawerContent {...props} />}
+      drawerContent={(props: any) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
         drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         drawerLabelStyle: {
-          marginLeft: -20,
+          marginLeft: 10, // Ceci aligne le texte avec les icônes
+        // Ajoute un espace entre l'icône et le texte
         },
       }}
     >
@@ -65,10 +65,17 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="settings"
+        name="Login"
         options={{
-          title: "Settings",
+          title: "Login",
           drawerIcon: ({ color }: { color: string }) => <FontAwesome name="cog" size={24} color={color} />,
+        }}
+      />
+       <Drawer.Screen
+        name="modal"
+        options={{
+          title: "Terms of Service",
+          drawerIcon: ({ color }: { color: string }) => <FontAwesome name="file-text" size={24} color={color} />,
         }}
       />
     </Drawer>

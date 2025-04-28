@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, StyleSheet, FlatList, Alert } from 'reac
 import * as SecureStore from 'expo-secure-store';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import FavoriteItemCard from '../../../components/favorites';
-import { GetUserFavorites} from '../../services/API/favorites';
+import { GetUserFavorites } from '../../services/API/favorites';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 export default function FavoritesScreen() {
@@ -21,8 +21,8 @@ export default function FavoritesScreen() {
       
       if (!id && isFocused) {
         Alert.alert(
-          'Connexion requise',
-          'Vous devez être connecté pour accéder à vos favoris',
+          'Login Required',
+          'You need to be logged in to access your favorites.',
           [
             {
               text: 'OK',
@@ -47,7 +47,6 @@ export default function FavoritesScreen() {
   });
 
   const handleRemoveSuccess = () => {
-    // Invalide le cache et déclenche un nouveau fetch
     queryClient.invalidateQueries({ queryKey: ['favorites', userId] });
   };
 
@@ -58,7 +57,7 @@ export default function FavoritesScreen() {
   if (!userId) {
     return (
       <View style={styles.center}>
-        <Text style={styles.loginMessage}>Redirection vers la page de connexion...</Text>
+        <Text style={styles.loginMessage}>Redirecting to login page...</Text>
       </View>
     );
   }
@@ -67,7 +66,7 @@ export default function FavoritesScreen() {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#2563eb" />
-        <Text>Chargement de vos favoris...</Text>
+        <Text>Loading your favorites...</Text>
       </View>
     );
   }
@@ -75,7 +74,7 @@ export default function FavoritesScreen() {
   if (error) {
     return (
       <View style={styles.center}>
-        <Text style={styles.error}>Erreur : {(error as Error).message}</Text>
+        <Text style={styles.error}>Error: {(error as Error).message}</Text>
       </View>
     );
   }
@@ -97,7 +96,7 @@ export default function FavoritesScreen() {
         />
       ) : (
         <View style={styles.center}>
-          <Text style={styles.placeholder}>Vous n'avez aucun favori pour le moment.</Text>
+          <Text style={styles.placeholder}>You don't have any favorites yet.</Text>
         </View>
       )}
     </View>

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '../services/API/auth'; 
+import { useRouter } from 'expo-router';
 
 export default function RegisterScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -11,8 +13,12 @@ export default function RegisterScreen() {
   const registerMutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      Alert.alert('Success', 'Registration successful!');
-      console.log('Registration successful:', data);
+      Alert.alert('Success', 'Registration successful!', [
+        {
+          text: 'OK',
+          onPress: () => router.replace('/'),
+        },
+      ]);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -24,8 +30,15 @@ export default function RegisterScreen() {
   const handleSubmit = () => {
     setError(null);
 
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !password) {
       setError('Email and password are required');
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setError('Invalid email address');
       return;
     }
 
@@ -34,13 +47,13 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Inscription</Text>
+      <Text style={styles.title}>Register</Text>
 
       <View style={styles.formGroup}>
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
-          placeholder="Votre email"
+          placeholder="Your email"
           keyboardType="email-address"
           autoCapitalize="none"
           onChangeText={setEmail}
@@ -49,10 +62,10 @@ export default function RegisterScreen() {
       </View>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Mot de passe</Text>
+        <Text style={styles.label}>Password</Text>
         <TextInput
           style={styles.input}
-          placeholder="Votre mot de passe"
+          placeholder="Your password"
           secureTextEntry
           onChangeText={setPassword}
           value={password}
@@ -60,7 +73,7 @@ export default function RegisterScreen() {
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>S'inscrire</Text>
+        <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
 
       {error && <Text style={styles.error}>{error}</Text>}

@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Button } from 'react-native';
+import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '../services/API/auth';
-import { GetUserById } from '../services/API/user';
 import * as SecureStore from 'expo-secure-store';
-
-function useUser(userId : string ) {
-  return {
-    user: useQuery({
-      queryKey: ['user', userId], 
-      queryFn: async () => {
-        if (!userId) {
-          throw new Error('User ID is required');
-        }
-        return GetUserById(userId);
-      },
-    }),
-  };
-}
+import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -27,13 +14,14 @@ export default function LoginScreen() {
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
-      // Stocke le token et le userId de façon sécurisée
+      // Store the token and userId securely
       await SecureStore.setItemAsync('token', data.token);
       await SecureStore.setItemAsync('userId', data.userId);
 
       Alert.alert('Success', 'Login successful!');
-      // Ici, tu peux aussi naviguer vers la page principale
-      // ou mettre à jour ton contexte d'authentification
+      router.replace('/');
+      // You can also navigate to the main page here
+      // or update your authentication context
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -46,7 +34,10 @@ export default function LoginScreen() {
     setErrors({});
 
     if (!email || !password) {
-      setErrors({ email: !email ? 'Email is required' : undefined, password: !password ? 'Password is required' : undefined });
+      setErrors({
+        email: !email ? 'Email is required' : undefined,
+        password: !password ? 'Password is required' : undefined,
+      });
       return;
     }
 
@@ -55,13 +46,13 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Se connecter</Text>
+      <Text style={styles.title}>Log In</Text>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Email :</Text>
+        <Text style={styles.label}>Email:</Text>
         <TextInput
           style={styles.input}
-          placeholder="Votre email"
+          placeholder="Your email"
           keyboardType="email-address"
           autoCapitalize="none"
           onChangeText={setEmail}
@@ -71,19 +62,27 @@ export default function LoginScreen() {
       </View>
 
       <View style={styles.formGroup}>
-        <Text style={styles.label}>Mot de passe :</Text>
+        <Text style={styles.label}>Password:</Text>
         <TextInput
           style={styles.input}
-          placeholder="Votre mot de passe"
+          placeholder="Your password"
           secureTextEntry
           onChangeText={setPassword}
           value={password}
         />
         {errors.password && <Text style={styles.error}>{errors.password}</Text>}
       </View>
+      
+      {/* Register Button */}
+      <TouchableOpacity 
+        style={styles.linkButton} 
+        onPress={() => router.push('/(pages)/Register')}
+      >
+        <Text style={styles.linkText}>No account yet? Create one</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Se connecter</Text>
+        <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
     </View>
   );
@@ -102,26 +101,28 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#111',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 30,
   },
   formGroup: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
     fontWeight: '600',
-    marginBottom: 6,
+    marginBottom: 8,
     color: '#333',
+    fontSize: 16,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#ddd',
     borderRadius: 12,
-    padding: 12,
+    padding: 15,
     fontSize: 16,
+    backgroundColor: '#f9f9f9',
   },
   error: {
     color: '#e11d48',
@@ -139,5 +140,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '600',
     fontSize: 16,
+  },
+  linkButton: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  linkText: {
+    color: '#2563eb',
+    fontSize: 16,
+    fontWeight: '500',
+    textDecorationLine: 'underline',
   },
 });
